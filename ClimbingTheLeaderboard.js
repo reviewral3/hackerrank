@@ -2,8 +2,6 @@
 
 const fs = require('fs');
 
-console.log('hellow world')
-
 process.stdin.resume();
 process.stdin.setEncoding('utf-8');
 
@@ -34,21 +32,29 @@ function readLine() {
  */
 
 function climbingLeaderboard(ranked, player) {
+    // convert to set for remove duplication
     const ranked_set = new Set(ranked)
-    ranked = Array.from(ranked_set)
+
     let players_rank = []
+    
     for (let i = 0; i < player.length; i++) {
         let player_rank = 1
-        for (const item of ranked_set) {
-            if (item <= player[i]) {
+        let pushed = false
+
+        // compare ranked score with player score
+        for (const score of ranked_set) {
+            if (score <= player[i]) {
                 players_rank.push(player_rank)
-                console.log('it pushed')
+                pushed = true
                 break
             } else {
                 player_rank += 1
             }
         }    
-        players_rank.push(player_rank)    
+        
+        if (!pushed) {
+            players_rank.push(player_rank)            
+        }
     }
     return players_rank
 }
