@@ -32,31 +32,38 @@ function readLine() {
  */
 
 function climbingLeaderboard(ranked, player) {
-    // convert to set for remove duplication
     const ranked_set = new Set(ranked)
-
-    let players_rank = []
+    ranked = Array.from(ranked_set)
+    player.reverse()
     
-    for (let i = 0; i < player.length; i++) {
-        let player_rank = 1
-        let pushed = false
+    let players_rank = []
+    let n = 1
+    
+    if (ranked[ranked.length-1] > player[1]) {
+        n = ranked.length
+    }   
 
-        // compare ranked score with player score
-        for (const score of ranked_set) {
-            if (score <= player[i]) {
-                players_rank.push(player_rank)
+    let player_rank = n
+     
+    for (let i = 0; i < player.length; i++) {
+        let pushed = false
+        let j = player_rank-1
+        console.log(j)
+        player_rank = n
+        for (j; j < ranked.length; j++) {
+            if (ranked[j] <= player[i]) {
+                players_rank.push(j+1)  
                 pushed = true
                 break
             } else {
                 player_rank += 1
             }
-        }    
-        
+        }
         if (!pushed) {
-            players_rank.push(player_rank)            
+            players_rank.push(j+1)            
         }
     }
-    return players_rank
+    return players_rank.reverse()
 }
 
 function main() {
